@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get_version/get_version.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:kolisamaj/color.dart';
+import 'package:kolisamaj/color_style.dart';
 import 'package:kolisamaj/data/app_notifier.dart';
 import 'package:kolisamaj/data/rest_ds.dart';
 import 'package:kolisamaj/routes.dart';
@@ -31,18 +31,12 @@ class LoginApp extends StatelessWidget {
           child: new MaterialApp(
             title: 'KOLI SAMAJ',
             debugShowCheckedModeBanner: false,
-            // theme: ThemeData(
-            //   primarySwatch: Colors.green,
-            //   accentColor: Colors.white,
-            //   primaryColor: Colors.white,
-            //   textTheme: GoogleFonts.latoTextTheme(textTheme).copyWith(
-            //     body1: GoogleFonts.roboto(textStyle: textTheme.body2),
-            //     body2: GoogleFonts.roboto(textStyle: textTheme.body2),
-            //     title: GoogleFonts.roboto(textStyle: textTheme.body2),
-            //     subtitle: GoogleFonts.roboto(textStyle: textTheme.body2),
-            //     subhead: GoogleFonts.roboto(textStyle: textTheme.body2),
-            //   ),
-            // ),
+            theme: ThemeData(
+              primarySwatch: Colors.green,
+              accentColor: Colors.white,
+              primaryColor: Colors.white,
+              textTheme: GoogleFonts.poppinsTextTheme(textTheme),
+            ),
             routes: routes,
           ),
         );
@@ -69,11 +63,6 @@ class _SplashScreenState extends State<SplashScreen>
   bool isloggin;
 
   String version = "2.0";
-  String _platformVersion = 'Unknown';
-  String _projectVersion = '';
-  String _projectCode = '';
-  String _projectAppID = '';
-  String _projectName = '';
 
   SharedPreferences prefs;
 
@@ -93,22 +82,22 @@ class _SplashScreenState extends State<SplashScreen>
     //     Navigator.of(context).popAndPushNamed("/notificationorderpending",arguments: {
     //       "order_id": message['data']['order_id']
     //     });
-    //    // showDialog(
-    //    //   context: context,
-    //    //   builder: (context) => AlertDialog(
-    //    //     content: ListTile(
-    //    //       title: Text(message['notification']['title']),
-    //    //       subtitle: Text(message['notification']['body']),
-    //    //     ),
-    //    //     actions: <Widget>[
-    //    //       FlatButton(
-    //    //         child: Text('Ok'),
-    //    //         onPressed: () => Navigator.of(context).pop(),
-    //    //       ),
-    //    //     ],
-    //    //   ),
-    //    // );
-    //    //  FlashHelper.errorBar(context, message: "sds");
+    //    showDialog(
+    //      context: context,
+    //      builder: (context) => AlertDialog(
+    //        content: ListTile(
+    //          title: Text(message['notification']['title']),
+    //          subtitle: Text(message['notification']['body']),
+    //        ),
+    //        actions: <Widget>[
+    //          FlatButton(
+    //            child: Text('Ok'),
+    //            onPressed: () => Navigator.of(context).pop(),
+    //          ),
+    //        ],
+    //      ),
+    //    );
+    //     FlashHelper.errorBar(context, message: "sds");
     //    // Alert(
     //    //   context: _ctx,
     //    //   type: AlertType.info,
@@ -128,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen>
     //    //     ),
     //    //   ],
     //    // ).show();
-    //     // _showItemDialog(message);
+    //    //  _showItemDialog(message);
     //   },
     //   onLaunch: (Map<String, dynamic> message) async {
     //     print("onLaunch: $message");
@@ -158,68 +147,13 @@ class _SplashScreenState extends State<SplashScreen>
     //     print("Push Messaging token: $token");
     //   });
     // });
-    //checkFirstSeen();
+    checkFirstSeen();
   }
 
   @override
   void dispose() {
     super.dispose();
   }
-
-  // initPlatformState() async {
-  //   String platformVersion;
-  //   // Platform messages may fail, so we use a try/catch PlatformException.
-  //   try {
-  //     platformVersion = await GetVersion.platformVersion;
-  //   } on PlatformException {
-  //     platformVersion = 'Failed to get platform version.';
-  //   }
-  //
-  //   String projectVersion;
-  //   // Platform messages may fail, so we use a try/catch PlatformException.
-  //   try {
-  //     projectVersion = await GetVersion.projectVersion;
-  //   } on PlatformException {
-  //     projectVersion = 'Failed to get project version.';
-  //   }
-  //
-  //   String projectCode;
-  //   // Platform messages may fail, so we use a try/catch PlatformException.
-  //   try {
-  //     projectCode = await GetVersion.projectCode;
-  //   } on PlatformException {
-  //     projectCode = 'Failed to get build number.';
-  //   }
-  //
-  //   String projectAppID;
-  //   // Platform messages may fail, so we use a try/catch PlatformException.
-  //   try {
-  //     projectAppID = await GetVersion.appID;
-  //   } on PlatformException {
-  //     projectAppID = 'Failed to get app ID.';
-  //   }
-  //
-  //   String projectName;
-  //   // Platform messages may fail, so we use a try/catch PlatformException.
-  //   try {
-  //     projectName = await GetVersion.appName;
-  //   } on PlatformException {
-  //     projectName = 'Failed to get app name.';
-  //   }
-  //
-  //   // If the widget was removed from the tree while the asynchronous platform
-  //   // message was in flight, we want to discard the reply rather than calling
-  //   // setState to update our non-existent appearance.
-  //   if (!mounted) return;
-  //
-  //   setState(() {
-  //     _platformVersion = platformVersion;
-  //     _projectVersion = projectVersion;
-  //     _projectCode = projectCode;
-  //     _projectAppID = projectAppID;
-  //     _projectName = projectName;
-  //   });
-  // }
 
   Future checkFirstSeen() async {
     prefs = await SharedPreferences.getInstance();
@@ -270,8 +204,7 @@ class _SplashScreenState extends State<SplashScreen>
     //         '/home', (Route<dynamic> route) => false);
     //   }
     // else{
-    Navigator.pushNamedAndRemoveUntil(
-        context, '/loginScreen', (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, '/HomeScreen', (route) => false);
     // }
     // var db = new DatabaseHelper();
     // var isLoggedIn = await db.isLoggedIn();

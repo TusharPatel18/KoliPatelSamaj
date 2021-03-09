@@ -1,6 +1,11 @@
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_picker_dropdown.dart';
+import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kolisamaj/utils/flash_helper.dart';
+import 'package:kolisamaj/Widgets/form_error.dart';
+import 'package:kolisamaj/utils/network_util.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 class loginScreen extends StatefulWidget {
   @override
@@ -8,180 +13,226 @@ class loginScreen extends StatefulWidget {
 }
 
 class _loginScreenState extends State<loginScreen> {
+  String _phonenumber, Token, number, phonecode, sendnum;
   final formKey = new GlobalKey<FormState>();
-  TextEditingController _Name = TextEditingController();
-  TextEditingController _Password = TextEditingController();
+  TextEditingController phoneNumEditingController = TextEditingController();
+  SmsAutoFill smsAutoFill = SmsAutoFill();
+  NetworkUtil _netUtil = new NetworkUtil();
+  final List<String> errors = [];
+
+  void addError({String error}) {
+    if (!errors.contains(error))
+      setState(() {
+        errors.add(error);
+      });
+  }
+
+  void removeError({String error}) {
+    if (errors.contains(error))
+      setState(() {
+        errors.remove(error);
+      });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    PhoneFieldHint();
+    getCurrentNumber();
+  }
+
+  getCurrentNumber() async {
+    number = await smsAutoFill.hint;
+    phoneNumEditingController.text = number.replaceFirst("+91", '');
+  }
+
+  @override
+  void dispose() {
+    SmsAutoFill().unregisterListener();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        decoration: new BoxDecoration(
-          image: new DecorationImage(
-            image: new AssetImage("images/Background.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 80),
-                  alignment: Alignment.center,
-                  child: Card(
-                    elevation: 3.0,
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
+    return Scaffold(
+      appBar: AppBar(
+        leading: Container(),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: Container(
+        margin: EdgeInsets.symmetric(horizontal: 40),
+        child: Column(
+          children: <Widget>[
+            // SizedBox(height: 50,),
+            Center(
+              child: Container(
+                child: Text(
+                  "Enter your mobile number",
+                  style: TextStyle(fontSize: 18, color: Colors.grey[800]),
+                ),
+              ),
+            ),
+            Center(
+              child: Container(
+                child: Text(
+                  "to continue ",
+                  style: TextStyle(fontSize: 18, color: Colors.grey[800]),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                CountryPickerDropdown(
+                  itemBuilder: _buildDropdownItem,
+                  onValuePicked: (Country country) {
+                    setState(() => phonecode = country.phoneCode);
+                    print("${country.phoneCode}");
+                  },
+                ),
+                Flexible(
+                  child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey[500],
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: new Image.asset(
-                              'images/koli patel samaj logo3.png',
-                              height: 150, width: 150,
-                              // fit: BoxFit.cover,
+                      child: Form(
+                        key: formKey,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width - 200,
+                          child: TextFormField(
+                            controller: phoneNumEditingController,
+                            keyboardType: TextInputType.number,
+                            onSaved: (val) => _phonenumber = val,
+                            onChanged: (value) {
+                              if (value.isNotEmpty && value.length != 10) {
+                                removeError(
+                                    error:
+                                        "Please Enter your 10 Digit Mobile Number");
+                              }
+                              return "";
+                            },
+                            validator: validateMobile,
+                            decoration: InputDecoration(
+                              hintText: "1234567890",
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                             ),
                           ),
-                          Text(
-                            "Koli Patel Samaj",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                new Text(
-                  "Login",
-                  style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                          child: TextFormField(
-                            obscureText: false,
-                            controller: _Name,
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              hintText: "Your Name",
-                              prefixIcon: const Icon(
-                                Icons.person,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                          child: TextFormField(
-                            obscureText: true,
-                            controller: _Password,
-                            textInputAction: TextInputAction.done,
-                            decoration: InputDecoration(
-                              hintText: "Password",
-                              prefixIcon: const Icon(
-                                Icons.lock,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Flexible(
-                              child: Card(
-                                elevation: 3.0,
-                                margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    if (_Name.text == "ABC" &&
-                                        _Password.text == "ABC123") {
-                                      Navigator.pushNamed(
-                                          context, "/HomeScreen");
-                                    } else {
-                                      FlashHelper.errorBar(context,
-                                          message:
-                                              "Please Enter Proper Name And Password...");
-                                    }
-                                  },
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    padding:
-                                        EdgeInsets.fromLTRB(15, 15, 10, 15),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text('Login',
-                                            style: TextStyle(
-                                                fontSize: 17.0,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black)),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't Have An Account?",
-                        style: TextStyle(
-                            fontWeight: FontWeight.normal, fontSize: 18),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed("/registrationScreen");
-                          },
-                          child: Text(
-                            "Register!",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 22),
-                          ))
-                    ],
                   ),
                 ),
               ],
             ),
-          ),
+            SizedBox(
+              height: 10,
+            ),
+            FormError(errors: errors),
+            SizedBox(
+              height: 30,
+            ),
+            Container(
+              child: Text(
+                "Tap Next to verify your account. An SMS may be sent to verify your number.",
+                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              child: FlatButton(
+                color: Colors.blue,
+                child: Text(
+                  'NEXT',
+                  style: TextStyle(fontSize: 15, color: Colors.white),
+                ),
+                // ignore: unrelated_type_equality_checks
+                onPressed: () {
+                  final form = formKey.currentState;
+                  if (form.validate()) {
+                    form.save();
+                    sendnum = phonecode.toString() + _phonenumber.toString();
+                    Navigator.of(context).pushNamed("/otp", arguments: {
+                      // "code": res["otp"],
+                      "mobile": sendnum,
+                    });
+                  }
+                  // final form = formKey.currentState;
+                  // if (form.validate()) {
+                  //   form.save();
+                  //
+                  //
+                  //   // _netUtil.post(RestDatasource.LOGIN_URL,
+                  //   //     body: {
+                  //   //       "mobile": _phonenumber,
+                  //   //       "inputNotificationTocken": Token,
+                  //   //     }).then((dynamic res) async {
+                  //   //   if (res["status"] == "notfound") {
+                  //   //     FlashHelper.errorBar(context, message: "Mobile Number Not Found");
+                  //   //     // setState(() => _isLoading = false);
+                  //   //   }
+                  //   //   else if (res["status"] == "block") {
+                  //   //     FlashHelper.errorBar(context, message: "Opps! You are blocked by admin.");
+                  //   //     // setState(() => _isLoading = false);
+                  //   //   }
+                  //   //   else {
+                  //   //     formKey.currentState.reset();
+                  //   //     FlashHelper.successBar(context, message: "OTP sent to your mobile number : "
+                  //   //       // +res["otp"]
+                  //   //     );
+                  //   //     // setState(() => _isLoading = false);
+                  //   //     Navigator.of(context).pushNamed(
+                  //   //         "/otp", arguments: {
+                  //   //       "code": res["otp"],
+                  //   //       "mobile":_phonenumber,
+                  //   //     });
+                  //   //   }
+                  //   //   Navigator.of(context).pushNamed(
+                  //   //       "/otp", arguments: {
+                  //   //     // "code": res["otp"],
+                  //   //     "mobile":_phonenumber,
+                  //   //   });
+                  // }
+                },
+              ),
+            ),
+          ],
         ),
+      ),
+    );
+  }
+
+  String validateMobile(String value) {
+// Indian Mobile number are of 10 digit only
+    if (value.isEmpty || (value.length != 10 && value.isNotEmpty)) {
+      addError(error: "Please Enter your 10 Digit Mobile Number");
+      return "";
+    }
+  }
+
+  Widget _buildDropdownItem(Country country) {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          CountryPickerUtils.getDefaultFlagImage(country),
+          SizedBox(
+            width: 10.0,
+          ),
+          Text("+${country.phoneCode} (${country.isoCode})"),
+        ],
       ),
     );
   }

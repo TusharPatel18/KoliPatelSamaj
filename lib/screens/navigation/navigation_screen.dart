@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kolisamaj/color_style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NavDrawer extends StatefulWidget {
@@ -62,198 +64,206 @@ class _NavDrawerState extends State<NavDrawer> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           Container(
-            // color: Color(0xFFF44336),
-            child: DrawerHeader(
-              padding: EdgeInsets.fromLTRB(0, 5.0, 0, 0),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: new Image.asset(
-                  'images/lets_connect_v1.9.png',
-                  width: 50.0,
+            height: 250,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage("images/blue.jpg"),
+              fit: BoxFit.cover,
+            )),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                InkWell(
+                  onTap: () {
+                    Navigator.of(_ctx).pop();
+                    showBottomSheet();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 50, horizontal: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          height: 35,
+                          width: 35,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            FontAwesomeIcons.userAlt,
+                            size: 20,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Container(
+                          child: Text(
+                            "Sign In",
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                                fontSize: 20),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: IconButton(
+              icon: Image.asset(
+                "images/profile.png",
+                color: Colors.black,
+                height: 24,
+                width: 24,
               ),
             ),
-          ),
-          ListTile(
-            leading: Icon(Icons.person, color: Colors.black),
             title: Text(
               'My Profile',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+              style: Appconstants.NavBarStyle,
             ),
             onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/myprofile");
+              Navigator.of(_ctx).popAndPushNamed("/ProfileScreen");
             },
           ),
           ListTile(
-            leading: Icon(Icons.cake, color: Colors.black),
+            leading: IconButton(
+              icon: Image.asset(
+                "images/business.png",
+                color: Colors.black,
+                height: 24,
+                width: 24,
+              ),
+            ),
             title: Text(
-              'Birthday',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+              'Business',
+              style: Appconstants.NavBarStyle,
             ),
             onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/birthday");
+              Navigator.of(context).pushNamed("/UserGridViewScreen");
             },
           ),
           ListTile(
-            leading: Icon(Icons.card_giftcard, color: Colors.black),
+            leading: IconButton(
+              icon: Image.asset(
+                "images/govt.png",
+                color: Colors.black,
+                height: 30,
+                width: 30,
+              ),
+            ),
             title: Text(
-              'Achievements',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+              'Govt. Officer',
+              style: Appconstants.NavBarStyle,
             ),
             onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/achievement");
+              // Navigator.of(_ctx).popAndPushNamed("/achievement");
             },
           ),
           ListTile(
-            leading: Icon(Icons.people, color: Colors.black),
+            leading: IconButton(
+              icon: Image.asset(
+                "images/politics.png",
+                color: Colors.black,
+                height: 30,
+                width: 30,
+              ),
+            ),
             title: Text(
-              'Members',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+              'politics',
+              style: Appconstants.NavBarStyle,
             ),
             onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/members");
+              // Navigator.of(_ctx).popAndPushNamed("/members");
             },
           ),
           ListTile(
-            leading: Icon(Icons.star, color: Colors.black),
+            leading: IconButton(
+              icon: Image.asset(
+                "images/private.png",
+                color: Colors.black,
+                height: 30,
+                width: 30,
+              ),
+            ),
             title: Text(
-              'Samaj Ratna',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+              'Private',
+              style: Appconstants.NavBarStyle,
             ),
             onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/samajratna");
+              // Navigator.of(_ctx).popAndPushNamed("/samajratna");
             },
           ),
           ListTile(
-            leading: Icon(Icons.pages, color: Colors.black),
+            leading: IconButton(
+              icon: Image.asset(
+                "images/ngo.png",
+                color: Colors.black,
+                height: 30,
+                width: 30,
+              ),
+            ),
             title: Text(
-              'News',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+              'NGO',
+              style: Appconstants.NavBarStyle,
             ),
             onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/news");
+              // Navigator.of(_ctx).popAndPushNamed("/news");
             },
           ),
           ListTile(
-            leading: Icon(Icons.business_center, color: Colors.black),
+            leading: IconButton(
+              icon: Image.asset(
+                "images/other.png",
+                color: Colors.black,
+                height: 30,
+                width: 30,
+              ),
+            ),
             title: Text(
-              'Jobs',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+              'Other',
+              style: Appconstants.NavBarStyle,
             ),
             onTap: () {
-              Navigator.popAndPushNamed(context, '/jobs');
+              // Navigator.popAndPushNamed(context, '/jobs');
             },
           ),
           ListTile(
-            leading: Icon(Icons.people, color: Colors.black),
-            title: Text(
-              'Trustee',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+            leading: IconButton(
+              icon: Image.asset(
+                "images/about.png",
+                color: Colors.black,
+                height: 28,
+                width: 28,
+              ),
             ),
-            onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/trustee");
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.people, color: Colors.black),
-            title: Text(
-              'Committee',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
-            ),
-            onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/committee");
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.photo, color: Colors.black),
-            title: Text(
-              'Photo',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
-            ),
-            onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/photo");
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.video_library, color: Colors.black),
-            title: Text(
-              'Video',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
-            ),
-            onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/video");
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.audiotrack, color: Colors.black),
-            title: Text(
-              'Audio',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
-            ),
-            onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/audio");
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.info, color: Colors.black),
             title: Text(
               'About',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+              style: Appconstants.NavBarStyle,
             ),
             onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/about");
+              // Navigator.of(_ctx).popAndPushNamed("/about");
             },
           ),
           ListTile(
-            leading: Icon(Icons.exit_to_app, color: Colors.black),
+            leading: IconButton(
+              icon: Image.asset(
+                "images/logout.png",
+                color: Colors.black,
+                height: 24,
+                width: 24,
+              ),
+            ),
             title: Text(
-              'Logout',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
+              'Log out',
+              style: Appconstants.NavBarStyle,
             ),
             onTap: () {
-              Navigator.of(_ctx).popAndPushNamed("/loginScreen");
+              // Navigator.of(_ctx).popAndPushNamed("/loginScreen");
             }
             // => logout()
             ,
@@ -263,11 +273,12 @@ class _NavDrawerState extends State<NavDrawer> {
             height: 10,
           ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               new Center(
                 child: new Text(
                   "Version 1.0",
-                  style: TextStyle(color: Colors.red),
+                  style: Appconstants.NavBarBottomStyle,
                 ),
               ),
               SizedBox(
@@ -276,7 +287,7 @@ class _NavDrawerState extends State<NavDrawer> {
               new Center(
                 child: new Text(
                   "Developed by Karon Infotech",
-                  style: TextStyle(fontSize: 12.0),
+                  style: Appconstants.NavBarBottomStyle,
                 ),
               ),
               SizedBox(
@@ -302,4 +313,69 @@ class _NavDrawerState extends State<NavDrawer> {
 //   void onAuthStateChanged(AuthState state) {
 //     // TODO: implement onAuthStateChanged
 //   }
+
+  void showBottomSheet() {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20),
+        ),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Column(
+                  children: [
+                    Text('Login \nKoli Samaj', style: Appconstants.LoginStyle),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.of(context).popAndPushNamed("/loginScreen");
+              },
+              child: Container(
+                width: 200,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "PHONE NUMBER",
+                      style: TextStyle(
+                          color: Colors.deepPurpleAccent,
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: Colors.deepPurpleAccent,
+                      size: 15,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 150,
+            )
+          ],
+        );
+      },
+    );
+  }
 }
