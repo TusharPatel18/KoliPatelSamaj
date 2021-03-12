@@ -334,7 +334,11 @@ class _NavDrawerState extends State<NavDrawer> {
                 padding: const EdgeInsets.only(top: 20),
                 child: Column(
                   children: [
-                    Text('Login \nKoli Samaj', style: Appconstants.LoginStyle),
+                    Center(
+                      child: Text('Login \n Koli Samaj',
+                          textAlign: TextAlign.center,
+                          style: Appconstants.LoginStyle),
+                    ),
                   ],
                 ),
               ),
@@ -351,12 +355,14 @@ class _NavDrawerState extends State<NavDrawer> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "PHONE NUMBER",
-                      style: TextStyle(
-                          color: Colors.deepPurpleAccent,
-                          fontSize: 18,
-                          fontWeight: FontWeight.normal),
+                    Center(
+                      child: Text(
+                        "PHONE NUMBER",
+                        style: TextStyle(
+                            color: Colors.deepPurpleAccent,
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal),
+                      ),
                     ),
                     SizedBox(
                       width: 20,

@@ -46,7 +46,9 @@ class _MemberDetailsScreenState extends State<MemberDetailsScreen> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
                           child: Image.asset(
-                            'images/dummyuser.png',
+                            'images/dummy.png',
+                            height: 130,
+                            width: 100,
                             fit: BoxFit.fitHeight,
                           ),
                         ),
@@ -104,6 +106,7 @@ class _MemberDetailsScreenState extends State<MemberDetailsScreen> {
                                       content: Text(
                                           "You Don't Have Permission To Contact Him/Her."),
                                       actions: [
+                                        // ignore: deprecated_member_use
                                         FlatButton(
                                           child: Text(
                                             "OK",
@@ -166,13 +169,10 @@ class _MemberDetailsScreenState extends State<MemberDetailsScreen> {
                     ),
                     Flexible(
                       child: Container(
-                        height: MediaQuery.of(context).size.height / 3 - 20,
                         margin:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Text(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.")),
+                        child: Text(
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consequat sapien eget orci lacinia, et interdum orci elementum."),
                       ),
                     ),
                   ],

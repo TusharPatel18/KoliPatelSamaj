@@ -20,6 +20,31 @@ class _UserGrideViewScreenState extends State<UserGrideViewScreen> {
     'https://cdn.pixabay.com/photo/2021/02/15/11/53/emotional-6017581_960_720.jpg'
   ];
 
+  List<Widget> _buildActions() {
+    // if (_isSearchingUser) {
+    //   return <Widget>[
+    //     new IconButton(
+    //       icon: const Icon(Icons.clear),
+    //       onPressed: () {
+    //         if (_searchQueryUser == null || _searchQueryUser.text.isEmpty) {
+    //           Navigator.pop(context);
+    //           return;
+    //         }
+    //         _clearSearchQuery();
+    //       },
+    //     ),
+    //   ];
+    // }
+    return <Widget>[
+      new IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: () {}
+        // _startSearch
+        ,
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +56,7 @@ class _UserGrideViewScreenState extends State<UserGrideViewScreen> {
           style: Appconstants.NavBarStyle,
         ),
         actions: [
+          ..._buildActions(),
           PopupMenuButton(
             icon: Icon(Icons.menu_outlined),
             tooltip: 'Filter',
@@ -83,67 +109,55 @@ class _UserGrideViewScreenState extends State<UserGrideViewScreen> {
                 onTap: () {
                   Navigator.of(context).pushNamed("/MemberdetailsScreen");
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple[50],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
-                    ),
+                child: Card(
+                  elevation: 5.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      // color: Colors.deepPurple[50],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
                       ),
-                      Container(
-                        height: 130,
-                        width: 100,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                          child: FadeInImage.memoryNetwork(
-                            placeholder: kTransparentImage,
-                            image: imageList[index],
-                            fit: BoxFit.cover,
-                            // height: 100,
-                            // width: MediaQuery.of(context).size.width,
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          height: 130,
+                          width: 100,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                            child: FadeInImage.memoryNetwork(
+                              placeholder: kTransparentImage,
+                              image: imageList[index],
+                              fit: BoxFit.cover,
+                              // height: 100,
+                              // width: MediaQuery.of(context).size.width,
+                            ),
+                            // child: Image.network(imageList[index],fit: BoxFit.cover,),
                           ),
-                          // child: Image.network(imageList[index],fit: BoxFit.cover,),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Name : ",
-                                  style: Appconstants.CommanTextStyle,
-                                ),
-                                Text(
-                                  "Satish Patel",
-                                  style: Appconstants.CommanTextStyle,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Post : ",
-                                  style: Appconstants.CommanTextStyle,
-                                ),
-                                Text(
-                                  "CEO At Karon Infotech",
-                                  style: Appconstants.CommanTextStyle,
-                                ),
-                              ],
-                            ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Satish Patel",
+                                style: Appconstants.CommanTextStyle,
+                              ),
+                              Text(
+                                "CEO At Karon Infotech",
+                                style: Appconstants.CommanTextStyle,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

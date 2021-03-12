@@ -87,14 +87,17 @@ class _loginScreenState extends State<loginScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                CountryPickerDropdown(
-                  itemBuilder: _buildDropdownItem,
-                  onValuePicked: (Country country) {
-                    setState(() => phonecode = country.phoneCode);
-                    print("${country.phoneCode}");
-                  },
+                Flexible(
+                  flex: 2,
+                  child: CountryPickerDropdown(
+                    itemBuilder: _buildDropdownItem,
+                    onValuePicked: (Country country) {
+                      setState(() => phonecode = country.phoneCode);
+                    },
+                  ),
                 ),
                 Flexible(
+                  flex: 2,
                   child: Container(
                     height: 50,
                     width: MediaQuery.of(context).size.width,
@@ -113,6 +116,7 @@ class _loginScreenState extends State<loginScreen> {
                             keyboardType: TextInputType.number,
                             onSaved: (val) => _phonenumber = val,
                             onChanged: (value) {
+                              print(_phonenumber);
                               if (value.isNotEmpty && value.length != 10) {
                                 removeError(
                                     error:
@@ -153,6 +157,7 @@ class _loginScreenState extends State<loginScreen> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: 50,
+              // ignore: deprecated_member_use
               child: FlatButton(
                 color: Colors.blue,
                 child: Text(
@@ -164,7 +169,9 @@ class _loginScreenState extends State<loginScreen> {
                   final form = formKey.currentState;
                   if (form.validate()) {
                     form.save();
-                    sendnum = phonecode.toString() + _phonenumber.toString();
+                    sendnum =
+                        ((phonecode != null) ? phonecode.toString() : "91") +
+                            _phonenumber.toString();
                     Navigator.of(context).pushNamed("/otp", arguments: {
                       // "code": res["otp"],
                       "mobile": sendnum,
@@ -229,7 +236,7 @@ class _loginScreenState extends State<loginScreen> {
         children: <Widget>[
           CountryPickerUtils.getDefaultFlagImage(country),
           SizedBox(
-            width: 10.0,
+            width: 3.0,
           ),
           Text("+${country.phoneCode} (${country.isoCode})"),
         ],

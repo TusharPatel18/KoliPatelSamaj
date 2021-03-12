@@ -1,17 +1,13 @@
 import 'dart:async';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_version/get_version.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:kolisamaj/color_style.dart';
 import 'package:kolisamaj/data/app_notifier.dart';
-import 'package:kolisamaj/data/rest_ds.dart';
 import 'package:kolisamaj/routes.dart';
 import 'package:kolisamaj/utils/flash_helper.dart';
-import 'package:kolisamaj/utils/network_util.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,7 +46,7 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => new _SplashScreenState();
 }
 
-final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+// final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {

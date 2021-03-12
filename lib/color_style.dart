@@ -66,14 +66,14 @@ class Appconstants {
   );
 
   static final TextStyle CommanTextStyle = TextStyle(
-    fontSize: 10.0,
+    fontSize: 12.0,
     fontWeight: FontWeight.w400,
     color: Colors.black,
   );
 
   static final TextStyle MProfileTextStyle = TextStyle(
     fontSize: 18.0,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w900,
     color: Colors.black,
   );
 }

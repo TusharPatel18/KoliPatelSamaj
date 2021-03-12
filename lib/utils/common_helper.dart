@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CommonHelper {
@@ -52,10 +51,5 @@ class CommonHelper {
     } else {
       throw 'Could not launch $url';
     }
-  }
-
-  String convertDesimalFormat(var value, String pattern) {
-    var format = new NumberFormat(pattern, "en_US");
-    return format.format(value);
   }
 }
